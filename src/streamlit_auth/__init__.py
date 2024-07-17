@@ -107,7 +107,7 @@ def add_auth(required=True, show_login_button=True, show_sidebar=True):
                 cookie_manager.delete("uuid")
                 st.session_state.pop('uuid', None)
                 st.cache_data.login_users.pop(uuid, None)
-                st.experimental_rerun()
+                st.rerun()
 
     return user_info
 
