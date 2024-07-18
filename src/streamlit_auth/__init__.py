@@ -51,16 +51,16 @@ def require_auth(message="Please sign in"):
 
     st.stop()
 
-def add_auth(required=True, show_login_button=True, show_sidebar=True):
+def add_auth(container, show_login_button=True, show_sidebar=True):
     user_info = get_logged_in_user()
     stb =  st.sidebar if show_sidebar else st._main
-    with stb:    
+    with stb:
         if show_login_button:
             if not user_info:
                 if oauth_provider == 'keycloak':
                     show_keycloak_login_button(sidebar = show_sidebar)
-                if oauth_provider == 'google':    
-                    show_google_login_button(sidebar = show_sidebar)       
+                if oauth_provider == 'google':
+                    show_google_login_button(container=container, sidebar=show_sidebar)
                 st.stop()
             
         st.write(user_info['email'])

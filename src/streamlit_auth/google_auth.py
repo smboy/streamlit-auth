@@ -89,11 +89,17 @@ def get_access_token_from_query_params(
     return token
 
 
-def show_login_button(sidebar: bool = True):
+def show_login_button(container, sidebar: bool = True):
     authorization_url = asyncio.run(
         get_authorization_url(client=client, redirect_url=redirect_url)
     )
-    markdown_button(authorization_url, "Login with Google", sidebar=sidebar)
+    if sidebar and not container:
+        markdown_button(authorization_url, "Login with Google", sidebar=sidebar)
+    else:
+        with container:
+            if st.button("Login with Google", type="primary"):
+                nav_script = f"""<meta http-equiv="refresh" content="0; url='{authorization_url}'">"""
+                st.write(nav_script, unsafe_allow_html=True)
 
 
 def get_logged_in_user() -> Optional[Dict]:
